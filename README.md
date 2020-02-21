@@ -1,2 +1,2 @@
 # mindspace-server
-The new Mindspace server
+The new and improved Mindspace server

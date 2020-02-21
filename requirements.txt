@@ -1,0 +1,9 @@
+attrs
+twisted
+autobahn
+sqlalchemy
+passlib
+db-dumper
+klein
+emote-utils
+pyyaml
