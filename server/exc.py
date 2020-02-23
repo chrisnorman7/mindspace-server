@@ -15,3 +15,11 @@ class InvalidUsername(AuthenticationError):
 
 class InvalidPassword(AuthenticationError):
     """Invalid password for that player."""
+
+
+class PermissionsError(Error):
+    """Insufficient permissions."""
+
+
+class MustBeAdmin(PermissionsError):
+    """You must be an administrator."""

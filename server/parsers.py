@@ -9,6 +9,8 @@ from os.path import dirname, join, relpath, splitext
 from attr import attrs, attrib
 from mindspace_protocol import MindspaceParser
 
+from .exc import MustBeAdmin
+
 logger = getLogger(__name__)
 _module_names = []
 
@@ -49,3 +51,9 @@ def load_commands():
         module = import_module(package, package='.commands')
         assert _sys_modules[module.__name__] is module
         _module_names.append(module.__name__)
+
+
+def admin_required(player):
+    """If the given player is not an admin, PermissionsError is raised."""
+    if player is None or not player.admin:
+        raise MustBeAdmin()
