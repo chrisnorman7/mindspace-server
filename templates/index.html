@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Mindspace Web</title>
+    </head>
+    <body>
+        <h1>Mindspace</h1>
+        <form id="loginForm">
+            <h2>Login</h2>
+            <p><label>Username: <input type="text" id="username"></label></p>
+            <p><label>Password: <input type="password" id="password"></label></p>
+            <p><input type="submit" id="login" value="Login"></p>
+        </form>
+        <script src="/socketurl.js"></script>
+        <script src="https://chrisnorman7.github.io/mindspace.js/mindspace.js"></script>
+        {{ "login.js" | script }}
+        {{ "constants.js" | script }}
+        {{ "commands/general.js" | script }}
+    </body>
+</html>
