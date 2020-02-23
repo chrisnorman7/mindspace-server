@@ -12,7 +12,7 @@ def login(con, username, password):
     """Try to log in with the given credentials."""
     try:
         player = Player.authenticate(username, password)
-        print(player)
+        con.message(str(player))
     except AuthenticationError:
         con.alert('Invalid login.')
         con.dropConnection()

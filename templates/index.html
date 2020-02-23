@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <title>Mindspace Web</title>
+        <link rel="stylesheet" href="{{ "css/style.css" | make_url }}">
     </head>
     <body>
         <h1>Mindspace</h1>
@@ -11,10 +12,11 @@
             <p><label>Password: <input type="password" id="password"></label></p>
             <p><input type="submit" id="login" value="Login"></p>
         </form>
+        <div aria-live="polite" id="message" class="sr-only"></div>
         <script src="/socketurl.js"></script>
         <script src="https://chrisnorman7.github.io/mindspace.js/mindspace.js"></script>
-        {{ "login.js" | script }}
-        {{ "constants.js" | script }}
-        {{ "commands/general.js" | script }}
+        <script src="{{ "js/login.js" | make_url }}"></script>
+        <script src="{{ "js/constants.js" | make_url }}"></script>
+        <script src="{{ "js/commands/general.js" | make_url }}"></script>
     </body>
 </html>

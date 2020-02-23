@@ -71,3 +71,7 @@ class WebSocket(WebSocketProtocol):
             self.alert(getdoc(e))
         except CommandNotFound as e:
             self.alert(f'Invalid command: "{e.args[-1]}".')
+
+    def message(self, text):
+        """Send a message to this connection."""
+        self.send_command('message', text)
