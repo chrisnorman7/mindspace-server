@@ -6,36 +6,20 @@ from importlib import import_module, invalidate_caches
 from os import listdir
 from os.path import dirname, join, relpath, splitext
 
-from attr import attrs, attrib
 from mindspace_protocol import MindspaceParser
 
-from .exc import MustBeAdmin
+from .exc import MustBeAdmin, NotWhileLoggedIn
 
 logger = getLogger(__name__)
 _module_names = []
 
-
-@attrs
-class _Parser:
-    """Add a name argument."""
-    name = attrib()
-
-
-@attrs
-class Parser(_Parser, MindspaceParser):
-    pass
-
-
-login_parser = Parser('Login')
-main_menu_parser = Parser('Main Menu')
-main_parser = Parser('Main')
+parser = MindspaceParser()
 
 
 def load_commands():
     """Import all files from server/commands."""
     invalidate_caches()
-    for parser in (login_parser, main_menu_parser, main_parser):
-        parser.commands.clear()
+    parser.commands.clear()
     for name in _module_names:
         if name in _sys_modules:
             del _sys_modules[name]
@@ -59,4 +43,13 @@ def admin_required(func):
         if con.player_id is not None and con.player.admin:
             return func(con, *args, **kwargs)
         raise MustBeAdmin()
+    return inner
+
+
+def anonymous(func):
+    """Must be called by a non-logged in connection."""
+    def inner(con, *args, **kwargs):
+        if con.player_id is None:
+            return func(con, *args, **kwargs)
+        raise NotWhileLoggedIn()
     return inner

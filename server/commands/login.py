@@ -1,12 +1,13 @@
 """Provides the "login" command."""
 
 from ..db import Player
-from ..parsers import login_parser
+from ..parsers import parser, anonymous
 
 from ..exc import AuthenticationError
 
 
-@login_parser.command
+@parser.command(name='login')
+@anonymous
 def login(con, username, password):
     """Try to log in with the given credentials."""
     try:

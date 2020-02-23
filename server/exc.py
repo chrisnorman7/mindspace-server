@@ -27,3 +27,7 @@ class PermissionsError(CommandError):
 
 class MustBeAdmin(PermissionsError):
     """You are not an administrator."""
+
+
+class NotWhileLoggedIn(PermissionsError):
+    """You cannot use this command after logging in."""
