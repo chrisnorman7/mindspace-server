@@ -1,10 +1,13 @@
 """Provides the WebSocket class."""
 
+from inspect import getdoc
 from logging import getLogger
 
+from mindspace_protocol import CommandNotFound
 from mindspace_web import WebSocketProtocol
 
 from .db import Player
+from .exc import CommandError
 
 
 class WebSocket(WebSocketProtocol):
@@ -58,3 +61,13 @@ class WebSocket(WebSocketProtocol):
     def alert(self, text):
         """Send an alert down the line."""
         self.send_command('alert', text)
+
+    def handle_command(self, command_name, *args, **kwargs):
+        """Handle a command from the other side."""
+        parser = self.factory.mindspace_factory.get_parser(self)
+        try:
+            return parser.handle_command(command_name, self, *args, **kwargs)
+        except CommandError as e:
+            self.alert(getdoc(e))
+        except CommandNotFound as e:
+            self.alert(f'Invalid command: "{e.args[-1]}".')

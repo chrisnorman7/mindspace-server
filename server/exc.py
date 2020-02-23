@@ -17,9 +17,13 @@ class InvalidPassword(AuthenticationError):
     """Invalid password for that player."""
 
 
-class PermissionsError(Error):
+class CommandError(Error):
+    """An error pertaining to the commands subsystem."""
+
+
+class PermissionsError(CommandError):
     """Insufficient permissions."""
 
 
 class MustBeAdmin(PermissionsError):
-    """You must be an administrator."""
+    """You are not an administrator."""
