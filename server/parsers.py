@@ -53,7 +53,10 @@ def load_commands():
         _module_names.append(module.__name__)
 
 
-def admin_required(player):
+def admin_required(func):
     """If the given player is not an admin, PermissionsError is raised."""
-    if player is None or not player.admin:
+    def inner(con, *args, **kwargs):
+        if con.player_id is not None and con.player.admin:
+            return func(con, *args, **kwargs)
         raise MustBeAdmin()
+    return inner
