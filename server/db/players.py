@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Float
 from twisted.internet import reactor
 
 from .base import Base, NameMixin, LocationMixin, CoordinatesMixin, Flag
+from .maps import MapOwner
 
 from ..exc import InvalidUsername, InvalidPassword
 from ..socials import factory
@@ -141,3 +142,8 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
             if sound is not None:
                 p.sound(sound)
             p.message(string)
+
+    def delete(self):
+        """First delete all MapOwner instances."""
+        MapOwner.query(player_id=self.id).delete()
+        return super().delete()
