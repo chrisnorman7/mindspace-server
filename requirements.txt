@@ -7,3 +7,5 @@ db-dumper
 klein
 emote-utils
 pyyaml
+mindspace-web
+mindspace-protocol
