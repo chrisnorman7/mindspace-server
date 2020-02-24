@@ -14,7 +14,7 @@ loginForm.onsubmit = e => {
                 }
             )
             username.value = ""
-            username.password = ""
+            password.value = ""
             loginForm.hidden = true
             loginButton.disabled = false
             loginButton.value = oldLoginValue

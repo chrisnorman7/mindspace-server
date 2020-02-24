@@ -51,11 +51,6 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
         """Check this player's password against the supplied password."""
         return crypt.verify(password, self.password)
 
-    def send_volume(self):
-        """Send self.volume to self.connection."""
-        if self.connection is not None:
-            self.connection.send('volume', self.volume)
-
     @property
     def connection(self):
         return connections.get(self.id, None)
@@ -63,17 +58,17 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
     @connection.setter
     def connection(self, value):
         if value is None:
-            del connections[self.id]
+            if self.id in connections:
+                del connections[self.id]
         else:
             old = self.connection
             if old is not None:
                 old.message('Logging you in from somewhere else.')
                 old.player_id = None
                 old.send('disconnecting')
-                old.transport.loseConnection()
+                old.dropConnection()
             self.connected = True
             connections[self.id] = value
-            self.send_volume()
 
     def message(self, string):
         """Send a message to this player's connection."""

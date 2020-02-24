@@ -26,7 +26,7 @@ class WebSocket(WebSocketProtocol):
         if self.player is not None:
             self.player.connected = False
             self.player.connection = None
-            player_name = self.player.get_name()
+            player_name = self.player.name
         else:
             player_name = self.transport.getPeer().host
         Player.message_admins(f'{player_name} has disconnected.')
@@ -57,6 +57,15 @@ class WebSocket(WebSocketProtocol):
     def player(self):
         if self.player_id is not None:
             return Player.get(self.player_id)
+
+    @player.setter
+    def player(self, value):
+        if value is None:
+            self.player_id = None
+        elif isinstance(value, Player):
+            self.player_id = value.id
+        else:
+            raise RuntimeError('Not a Player instance: %r.' % value)
 
     def alert(self, text):
         """Send an alert down the line."""
