@@ -1,5 +1,7 @@
 """Provides the Player class."""
 
+from logging import getLogger
+
 from passlib.hash import sha512_crypt
 from sqlalchemy import Column, String, Float
 from twisted.internet import reactor
@@ -13,6 +15,7 @@ from ..util import pluralise
 
 crypt = sha512_crypt.using(rounds=10000)
 connections = {}
+logger = getLogger(__name__)
 
 
 class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
@@ -31,6 +34,7 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
         """Create a new user."""
         p = cls(username=username, name=name)
         p.set_password(password)
+        logger.info('Created player %s with username %s.', p.name, p.username)
         return p
 
     @classmethod
