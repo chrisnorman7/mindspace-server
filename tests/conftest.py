@@ -1,7 +1,7 @@
 from attr import attrs, attrib, Factory
 from pytest import fixture
 
-from server.db import Map, Player, Base
+from server.db import Room, Player, Base
 from server.parsers import load_commands
 
 NoneType = type(None)
@@ -24,11 +24,11 @@ def initialise():
     load_commands()
 
 
-@fixture(name='map')
+@fixture(name='room')
 def get_map():
-    m = Map(name='Test Map')
-    m.save()
-    return m
+    r = Room(name='Test Map')
+    r.save()
+    return r
 
 
 @fixture(name='player')

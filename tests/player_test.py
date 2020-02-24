@@ -34,10 +34,11 @@ def test_player_set_password():
     assert p.check_password('new') is True
 
 
-def test_player_location(player, map):
+def test_player_location(player, room):
     player.location_id = None
     player.save()
     assert player.location is None
-    assert map.players == []
-    player.location = map
-    assert map.players == [player]
+    assert room.players == []
+    player.location = room
+    player.save()
+    assert room.players == [player]

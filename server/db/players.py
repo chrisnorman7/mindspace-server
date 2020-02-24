@@ -5,7 +5,7 @@ from sqlalchemy import Column, String, Float
 from twisted.internet import reactor
 
 from .base import Base, NameMixin, LocationMixin, CoordinatesMixin, Flag
-from .maps import MapOwner
+from .rooms import RoomOwner
 
 from ..exc import InvalidUsername, InvalidPassword
 from ..socials import factory
@@ -79,7 +79,7 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
 
     @property
     def neighbours(self):
-        """Return the players in the same map as this player, excluding this
+        """Return the players in the same room as this player, excluding this
         player."""
         cls = type(self)
         return cls.query(
@@ -139,6 +139,6 @@ class Player(Base, NameMixin, CoordinatesMixin, LocationMixin):
             p.message(string)
 
     def delete(self):
-        """First delete all MapOwner instances."""
-        MapOwner.query(player_id=self.id).delete()
+        """First delete all RoomOwner instances."""
+        RoomOwner.query(player_id=self.id).delete()
         return super().delete()

@@ -182,13 +182,13 @@ class DescriptionMixin:
 class LocationMixin:
     @declared_attr
     def location_id(cls):
-        return Column(Integer, ForeignKey('maps.id'), nullable=True)
+        return Column(Integer, ForeignKey('rooms.id'), nullable=True)
 
     @declared_attr
     def location(cls):
         return relationship(
-            'Map', backref=cls.__tablename__, foreign_keys=[cls.location_id],
-            remote_side='Map.id'
+            'Room', backref=cls.__tablename__, foreign_keys=[cls.location_id],
+            remote_side='Room.id'
         )
 
     def same_coordinates(self):
