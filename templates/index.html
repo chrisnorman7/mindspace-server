@@ -16,10 +16,16 @@
             <p><label>Password: <input type="password" id="password"></label></p>
             <p><input type="submit" id="login" value="Login"></p>
         </form>
-        <script src="/socketurl.js"></script>
+        <div tabindex="0" role="application" id="keyboard">
+            <p>Type keystrokes here.</p>
+        </div>
         <script src="https://chrisnorman7.github.io/mindspace.js/mindspace.js"></script>
-        <script src="{{ "js/login.js" | make_url }}"></script>
+        <script src="/socketurl.js"></script>
         <script src="{{ "js/constants.js" | make_url }}"></script>
+        <script src="{{ "js/init.js" | make_url }}"></script>
+        <script src="{{ "js/login.js" | make_url }}"></script>
+        <!-- Command scripts. -->
         <script src="{{ "js/commands/general.js" | make_url }}"></script>
+        <script src="{{ "js/commands/login.js" | make_url }}"></script>
     </body>
 </html>

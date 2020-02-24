@@ -15,6 +15,7 @@ def login(con, username, password):
         con.player = player
         player.connection = con
         con.message(f'Welcome back, {player.name}.')
+        con.send_command('authenticated', player.name)
     except AuthenticationError:
         con.alert('Invalid login.')
         con.dropConnection()

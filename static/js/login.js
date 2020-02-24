@@ -1,8 +1,14 @@
-/* globals mindspace, socketURL, loginForm, loginButton, username, password */
+/* globals mindspace, socketURL, loginForm, loginButton, username, password, keyboard */
+
+let submitting = false
+const oldLoginValue = loginButton.value
 
 loginForm.onsubmit = e => {
     e.preventDefault()
-    let oldLoginValue = loginButton.value
+    if (submitting) {
+            return // Don't let them login twice.
+    }
+    submitting = true
     loginButton.value = "Connecting..."
     loginButton.disabled = true
     mindspace.connect(socketURL)
@@ -13,13 +19,28 @@ loginForm.onsubmit = e => {
                     args: [username.value, password.value]
                 }
             )
-            username.value = ""
-            password.value = ""
-            loginForm.hidden = true
-            loginButton.disabled = false
-            loginButton.value = oldLoginValue
     }
     mindspace.socket.onclose = () => {
+        submitting = false
         loginForm.hidden = false
+        keyboard.hidden = true
+        loginButton.disabled = false
+        loginButton.value = oldLoginValue
+    }
+    mindspace.socket.onerror = () => {
+            mindspace.socket.onclose()
+            alert("There was an error with the websocket. Please try again.")
     }
 }
+
+function loggedIn() {
+    username.value = ""
+    password.value = ""
+    loginForm.hidden = true
+    keyboard.hidden = false
+    loginButton.disabled = false
+    loginButton.value = oldLoginValue
+    keyboard.focus()
+}
+
+this.loggedIn = loggedIn
