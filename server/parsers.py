@@ -37,19 +37,28 @@ def load_commands():
         _module_names.append(module.__name__)
 
 
-def admin_required(func):
+def parser_decorator(decorated):
+    """Decorate a function so that it can be used as a decorator after the
+    parser.command decorator."""
+
+    def outer(func):
+        def inner(con, *args, **kwargs):
+            """Give decorated(con) chance to raise something."""
+            decorated(con)
+            return func(con, *args, **kwargs)
+        return inner
+    return outer
+
+
+@parser_decorator
+def admin_required(con):
     """If the given player is not an admin, PermissionsError is raised."""
-    def inner(con, *args, **kwargs):
-        if con.player_id is not None and con.player.admin:
-            return func(con, *args, **kwargs)
+    if con.player_id is None or not con.player.admin:
         raise MustBeAdmin()
-    return inner
 
 
-def anonymous(func):
+@parser_decorator
+def anonymous(con):
     """Must be called by a non-logged in connection."""
-    def inner(con, *args, **kwargs):
-        if con.player_id is None:
-            return func(con, *args, **kwargs)
+    if con.player_id is not None:
         raise NotWhileLoggedIn()
-    return inner
