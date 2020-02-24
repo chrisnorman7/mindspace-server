@@ -15,6 +15,8 @@ class Room(Base, NameMixin, CreatedMixin):
     __tablename__ = 'rooms'
     size_x = Column(Integer, nullable=False, default=25)
     size_y = Column(Integer, nullable=False, default=25)
+    zone_id = Column(Integer, ForeignKey('zones.id'), nullable=False)
+    zone = relationship('Zone', backref='rooms')
 
     def broadcast(self, text, sound=None):
         """Broadcast a message to all players on this room."""

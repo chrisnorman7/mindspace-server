@@ -179,6 +179,10 @@ class DescriptionMixin:
         return self.description or 'You see nothing special.'
 
 
+class NameDescriptionMixin(NameMixin, DescriptionMixin):
+    pass
+
+
 class LocationMixin:
     @declared_attr
     def location_id(cls):
@@ -215,10 +219,7 @@ class OwnerMixin:
     def set_owner(self, value):
         """Set self.owner, and update self.owned_since."""
         self.owner = value
-        if value is None:
-            self.owned_since = None
-        else:
-            self.owned_since = datetime.utcnow()
+        self.owned_since = datetime.utcnow()
 
 
 def Flag(default, nullable=False):
