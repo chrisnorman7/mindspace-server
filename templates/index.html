@@ -1,31 +1,26 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>Mindspace Web</title>
-        <link rel="stylesheet" href="{{ "css/style.css" | make_url }}">
-    </head>
-    <body>
-        <h1>Mindspace</h1>
-        <h2>Messages</h2>
-        <div id="messages" aria-live="polite"></div>
-        <hr>
-        <div aria-live="polite" id="message" class="sr-only"></div>
-        <form id="loginForm">
-            <h2>Login</h2>
-            <p><label>Username: <input type="text" id="username"></label></p>
-            <p><label>Password: <input type="password" id="password"></label></p>
-            <p><input type="submit" id="login" value="Login"></p>
-        </form>
-        <div tabindex="0" role="application" id="keyboard">
-            <p>Type keystrokes here.</p>
-        </div>
-        <script src="https://chrisnorman7.github.io/mindspace.js/mindspace.js"></script>
-        <script src="/socketurl.js"></script>
-        <script src="{{ "js/constants.js" | make_url }}"></script>
-        <script src="{{ "js/init.js" | make_url }}"></script>
-        <script src="{{ "js/login.js" | make_url }}"></script>
-        <!-- Command scripts. -->
-        <script src="{{ "js/commands/general.js" | make_url }}"></script>
-        <script src="{{ "js/commands/login.js" | make_url }}"></script>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block main %}
+<h1>Mindspace</h1>
+<h2>Messages</h2>
+<div id="messages" aria-live="polite"></div>
+<hr>
+<div aria-live="polite" id="message" class="sr-only"></div>
+<form id="loginForm">
+    <h2>Login</h2>
+    <p><label>Username: <input type="text" id="username"></label></p>
+    <p><label>Password: <input type="password" id="password"></label></p>
+    <p><input type="submit" id="login" value="Login"></p>
+    <p>No account? <a href="/register/">Register</a>.</p>
+</form>
+<div tabindex="0" role="application" id="keyboard">
+    <p>Type keystrokes here.</p>
+</div>
+<script src="https://chrisnorman7.github.io/mindspace.js/mindspace.js"></script>
+<script src="/socketurl.js"></script>
+<script src="{{ "js/constants.js" | make_url }}"></script>
+<script src="{{ "js/init.js" | make_url }}"></script>
+<script src="{{ "js/login.js" | make_url }}"></script>
+<!-- Command scripts. -->
+<script src="{{ "js/commands/general.js" | make_url }}"></script>
+<script src="{{ "js/commands/login.js" | make_url }}"></script>
+{% endblock %}

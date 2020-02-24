@@ -9,3 +9,4 @@ emote-utils
 pyyaml
 mindspace-web
 mindspace-protocol
+random-password

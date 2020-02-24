@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Character Registration{% endblock %}
+{% block main %}
+<h1>Register for an account</h1>
+{% if error %}
+    <h2>Error</h2>
+    <p>{{ error }}</p>
+{% endif %}
+<form id="createForm" method="POST">
+    <h2>Username</h2>
+    <p>Your username is not your character name.</p>
+    <p><label>Username: <input type="text" id="username" name="username"></label></p>
+    <h2>Character Name</h2>
+    <p>This is the name of your character. You may include spaces, but please be aware that if a name is deemed inappropriate, you will have to change it. If your name is deemed offensive, then you may find yourself deleted.</p>
+    <p><label>Character Name: <input type="text" id="name" name="name"></label></p>
+    <h2>Password</h2>
+    <p>Your password should be a combination of letters and numbers. We suggest {{ password}}.</p>
+    <p><label>Password: <input type="password" id="password" name="password"></label><p>
+    <p><label>Confirm Password: <input type="password" id="confirm"></label></p>
+    <p><input type="submit" value="Create"></p>
+</form>
+<script src="{{ "js/registration.js" | make_url }}"></script>
+{% endblock %}
