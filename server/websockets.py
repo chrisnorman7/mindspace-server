@@ -10,7 +10,40 @@ from .db import Player
 from .exc import CommandError
 
 
-class WebSocket(WebSocketProtocol):
+class WebSocketCommands:
+    """Commands that can be called on connection objects."""
+
+    def alert(self, text):
+        """Send an alert down the line."""
+        self.send_command('alert', text)
+
+    def message(self, text):
+        """Send a message to this connection."""
+        self.send_command('message', text)
+
+    def confirm(
+        self, message, ok_command, cancel_command, ok_args=None,
+        ok_kwargs=None, cancel_args=None, cancel_kwargs=None
+    ):
+        """Send a confirmation box to the client's web browser. If they click
+        "OK", cancel_command will be sent back, with attendant args and kwargs.
+        If not, cancel_command will be sent back, with attendant args and
+        kwargs."""
+        if ok_args is None:
+            ok_args = []
+        if ok_kwargs is None:
+            ok_kwargs = {}
+        if cancel_args is None:
+            cancel_args = []
+        if cancel_kwargs is None:
+            cancel_kwargs = {}
+        self.send_command(
+            'confirm', message, ok_command, ok_args, ok_kwargs, cancel_command,
+            cancel_args, cancel_kwargs
+        )
+
+
+class WebSocket(WebSocketProtocol, WebSocketCommands):
     def connectionMade(self):
         """Create a logger."""
         super().connectionMade()
@@ -67,10 +100,6 @@ class WebSocket(WebSocketProtocol):
         else:
             raise RuntimeError('Not a Player instance: %r.' % value)
 
-    def alert(self, text):
-        """Send an alert down the line."""
-        self.send_command('alert', text)
-
     def handle_command(self, command_name, *args, **kwargs):
         """Handle a command from the other side."""
         parser = self.factory.mindspace_factory.get_parser(self)
@@ -80,7 +109,3 @@ class WebSocket(WebSocketProtocol):
             self.alert(getdoc(e))
         except CommandNotFound as e:
             self.alert(f'Invalid command: "{e.args[-1]}".')
-
-    def message(self, text):
-        """Send a message to this connection."""
-        self.send_command('message', text)
