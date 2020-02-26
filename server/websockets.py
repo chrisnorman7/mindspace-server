@@ -22,8 +22,8 @@ class WebSocketCommands:
         self.send_command('message', text)
 
     def confirm(
-        self, message, ok_command, cancel_command, ok_args=None,
-        ok_kwargs=None, cancel_args=None, cancel_kwargs=None
+        self, message, ok_command, ok_args=None, ok_kwargs=None,
+        cancel_command=None, cancel_args=None, cancel_kwargs=None
     ):
         """Send a confirmation box to the client's web browser. If they click
         "OK", cancel_command will be sent back, with attendant args and kwargs.

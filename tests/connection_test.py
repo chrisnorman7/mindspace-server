@@ -20,14 +20,19 @@ def test_confirm(con):
     cancel_command = 'bar'
     cancel_args = [4, 5, 6]
     cancel_kwargs = {'test': 'this'}
-    con.confirm(msg, ok_command, cancel_command)
+    con.confirm(msg, ok_command)
+    assert con.command_args == (
+        'confirm', msg, ok_command, [], {}, None, [], {}
+    )
+    con.confirm(msg, ok_command, cancel_command=cancel_command)
     assert con.command_args == (
         'confirm', msg, ok_command, [], {}, cancel_command, [], {}
     )
     assert con.command_kwargs == {}
     con.confirm(
-        msg, ok_command, cancel_command, ok_args=ok_args, ok_kwargs=ok_kwargs,
-        cancel_args=cancel_args, cancel_kwargs=cancel_kwargs
+        msg, ok_command, ok_args=ok_args, ok_kwargs=ok_kwargs,
+        cancel_command=cancel_command, cancel_args=cancel_args,
+        cancel_kwargs=cancel_kwargs
     )
     assert con.command_args == (
         'confirm', msg, ok_command, ok_args, ok_kwargs, cancel_command,
