@@ -42,6 +42,10 @@ class WebSocketCommands:
             cancel_args, cancel_kwargs
         )
 
+    def urlopen(self, url):
+        """Tell the client to open a URL."""
+        self.send_command('urlopen', url)
+
 
 class WebSocket(WebSocketProtocol, WebSocketCommands):
     def connectionMade(self):

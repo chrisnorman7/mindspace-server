@@ -39,3 +39,10 @@ def test_confirm(con):
         cancel_args, cancel_kwargs
     )
     assert con.command_kwargs == {}
+
+
+def test_urlopen(con):
+    url = 'test'
+    con.urlopen(url)
+    assert con.command_args == ('urlopen', url)
+    assert con.command_kwargs == {}

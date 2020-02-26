@@ -21,3 +21,5 @@ mindspace.addCommand(
         }
     }
 )
+
+mindspace.addCommand('urlopen', window.open)
