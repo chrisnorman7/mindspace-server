@@ -16,8 +16,8 @@ logger = getLogger(__name__)
 class PretendConnection(WebSocketCommands):
     """A pretend connection object. Used for testing."""
 
-    command_args = None
-    command_kwargs = None
+    command_args = attrib(default=Factory(tuple))
+    command_kwargs = attrib(default=Factory(dict))
     player_id = attrib(default=Factory(NoneType))
     logger = attrib(default=Factory(lambda: logger))
 
